@@ -3,6 +3,7 @@
  * asymmetric editorial composition, restrained motion, and clear human-first conversion paths.
  */
 import { FormEvent, useEffect, useState } from "react";
+import { trpc } from "@/lib/trpc";
 import {
   ArrowDownRight,
   ArrowRight,
@@ -160,6 +161,8 @@ export default function Home() {
   const [activeService, setActiveService] = useState(0);
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const createRequest = trpc.serviceRequests.create.useMutation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -168,9 +171,26 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    setSubmitError(null);
+
+    try {
+      await createRequest.mutateAsync({
+        name: String(data.get("name") ?? ""),
+        phone: String(data.get("phone") ?? ""),
+        email: String(data.get("email") ?? ""),
+        serviceNeeded: String(data.get("service") ?? ""),
+        preferredDateTime: String(data.get("date") ?? "") || undefined,
+        description: String(data.get("description") ?? ""),
+      });
+      form.reset();
+      setSubmitted(true);
+    } catch {
+      setSubmitError("We could not save your request. Please try again or call the number below.");
+    }
   };
 
   const active = services[activeService];
@@ -432,7 +452,7 @@ export default function Home() {
         </section>
 
         <section className="request-section" id="request-service" aria-labelledby="request-title">
-          <div className="container request-section__layout"><div className="request-section__lead"><SectionLabel number="12" light>Next step</SectionLabel><h2 id="request-title">Let’s get your<br /><em>comfort back.</em></h2><p>Tell us what is happening and we will help make the next step clear.</p><div className="request-section__direct"><a href={phoneHref}><Phone size={17} /> {placeholderPhone}</a><a href="mailto:[EMAIL]"><Mail size={17} /> [EMAIL]</a></div></div><div className="request-form-wrap">{submitted ? <div className="form-success"><div className="form-success__mark"><Check size={22} /></div><span className="form-success__eyebrow">Request received</span><h3>We have your note.</h3><p>This front-end form is ready for connection to the company’s preferred intake workflow. A confirmed response message can be added once that integration is available.</p><button className="text-link text-link--light" onClick={() => setSubmitted(false)} type="button">Send another request <ArrowRight size={17} /></button></div> : <form className="request-form" onSubmit={handleSubmit}><div className="request-form__top"><span>Service request</span><span>Approx. 2 minutes</span></div><div className="form-row"><label>Name<input name="name" required placeholder="Your name" /></label><label>Phone<input name="phone" type="tel" required placeholder={placeholderPhone} /></label></div><div className="form-row"><label>Email<input name="email" type="email" required placeholder="you@example.com" /></label><label>Service needed<select name="service" defaultValue=""><option value="" disabled>Select a service</option><option>Cooling</option><option>Heating</option><option>Maintenance</option><option>Indoor air quality</option><option>Emergency service</option><option>Commercial HVAC</option></select></label></div><label>Preferred date / time<input name="date" placeholder="[PREFERRED DATE / TIME]" /></label><label>What is happening?<textarea name="description" required placeholder="A short description of the issue" rows={3} /></label><button className="button button--copper" type="submit">Send service request <ArrowUpRight size={16} /></button><span className="form-disclaimer">[PLACEHOLDER — ADD PRIVACY / RESPONSE EXPECTATIONS BEFORE LAUNCH]</span></form>}</div></div>
+          <div className="container request-section__layout"><div className="request-section__lead"><SectionLabel number="12" light>Next step</SectionLabel><h2 id="request-title">Let’s get your<br /><em>comfort back.</em></h2><p>Tell us what is happening and we will help make the next step clear.</p><div className="request-section__direct"><a href={phoneHref}><Phone size={17} /> {placeholderPhone}</a><a href="mailto:[EMAIL]"><Mail size={17} /> [EMAIL]</a></div></div><div className="request-form-wrap">{submitted ? <div className="form-success"><div className="form-success__mark"><Check size={22} /></div><span className="form-success__eyebrow">Request received</span><h3>We have your note.</h3><p>Your request has been saved securely. The team can now review it and follow up using the contact details you provided. A confirmed response message can be added once the company’s preferred intake workflow is connected.</p><button className="text-link text-link--light" onClick={() => setSubmitted(false)} type="button">Send another request <ArrowRight size={17} /></button></div> : <form className="request-form" onSubmit={handleSubmit}><div className="request-form__top"><span>Service request</span><span>Approx. 2 minutes</span></div><div className="form-row"><label>Name<input name="name" required placeholder="Your name" /></label><label>Phone<input name="phone" type="tel" required placeholder={placeholderPhone} /></label></div><div className="form-row"><label>Email<input name="email" type="email" required placeholder="you@example.com" /></label><label>Service needed<select name="service" required defaultValue=""><option value="" disabled>Select a service</option><option>Cooling</option><option>Heating</option><option>Maintenance</option><option>Indoor air quality</option><option>Emergency service</option><option>Commercial HVAC</option></select></label></div><label>Preferred date / time<input name="date" placeholder="[PREFERRED DATE / TIME]" /></label><label>What is happening?<textarea name="description" required placeholder="A short description of the issue" rows={3} /></label>{submitError && <p className="form-error" role="alert">{submitError}</p>}<button className="button button--copper" disabled={createRequest.isPending} type="submit">{createRequest.isPending ? "Saving request…" : "Send service request"} <ArrowUpRight size={16} /></button><span className="form-disclaimer">[PLACEHOLDER — ADD PRIVACY / RESPONSE EXPECTATIONS BEFORE LAUNCH]</span></form>}</div></div>
         </section>
       </main>
 

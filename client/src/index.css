@@ -113,6 +113,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .header-phone:hover { color: var(--copper-deep); }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 17px; min-height: 52px; padding: 0 21px; cursor: pointer; border-radius: 0; font-size: 12px; font-weight: 700; letter-spacing: .01em; transition: transform .16s var(--ease-out), background .22s var(--ease-out), color .22s var(--ease-out), border-color .22s var(--ease-out); }
 .button:active { transform: scale(.97); }
+.button:disabled { cursor: wait; opacity: .62; }
 .button--small { min-height: 39px; padding-inline: 15px; gap: 10px; }
 .button--copper { color: var(--paper); background: var(--copper); }
 .button--copper:hover { background: var(--copper-deep); transform: translateY(-2px); }
@@ -336,6 +337,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .request-form input:focus, .request-form select:focus, .request-form textarea:focus { border-color: var(--copper); }
 .request-form .button { align-self: flex-start; margin-top: 3px; }
 .form-disclaimer { display: block; color: var(--muted-foreground); font-family: "IBM Plex Mono", monospace; font-size: 8px; letter-spacing: .07em; line-height: 1.45; text-transform: uppercase; }
+.form-error { margin: 0; color: #9b3d2e; font-size: 12px; line-height: 1.45; }
 .form-success { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 404px; }
 .form-success__mark { display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 28px; background: var(--copper); color: var(--paper); }
 .form-success__eyebrow { color: var(--copper-deep); font-size: 8px; }.form-success h3 { margin: 17px 0 0; font-size: 38px; font-weight: 600; letter-spacing: -.05em; line-height: 1; }.form-success p { max-width: 410px; margin: 19px 0 0; color: var(--muted-foreground); font-size: 14px; line-height: 1.55; }.form-success .text-link { margin-top: 28px; }
