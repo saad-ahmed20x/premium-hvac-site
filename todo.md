@@ -9,4 +9,4 @@
 - [x] Save a checkpoint and deliver the database-enabled project.
 - [x] Verify end-to-end persistence by submitting non-personal test data through the live form and querying the database to confirm the saved service request row.
 - [x] Update the success-state copy so it reflects that the request is now persisted.
-- [ ] Save a new checkpoint for the database-enabled project and deliver that updated checkpoint to the user.
+- [x] Save a new checkpoint for the database-enabled project and deliver that updated checkpoint to the user.
