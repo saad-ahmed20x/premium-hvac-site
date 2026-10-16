@@ -30,6 +30,7 @@ describe("serviceRequests.create", () => {
     const result = await caller.serviceRequests.create({
       name: "Test Visitor",
       phone: "555-0100",
+      zipCode: "32801",
       email: "test@example.com",
       serviceNeeded: "Cooling",
       preferredDateTime: "Next available",
@@ -40,6 +41,7 @@ describe("serviceRequests.create", () => {
     expect(createServiceRequest).toHaveBeenCalledWith({
       name: "Test Visitor",
       phone: "555-0100",
+      zipCode: "32801",
       email: "test@example.com",
       serviceNeeded: "Cooling",
       preferredDateTime: "Next available",
@@ -55,9 +57,28 @@ describe("serviceRequests.create", () => {
       caller.serviceRequests.create({
         name: "A",
         phone: "555-0100",
+        zipCode: "bad-zip",
         email: "not-an-email",
         serviceNeeded: "Cooling",
         description: "Not enough valid input.",
+      }),
+    ).rejects.toMatchObject({ code: "BAD_REQUEST" });
+
+    expect(createServiceRequest).not.toHaveBeenCalled();
+  });
+
+  it("rejects a malformed ZIP code before touching the database", async () => {
+    createServiceRequest.mockClear();
+    const caller = appRouter.createCaller(createContext());
+
+    await expect(
+      caller.serviceRequests.create({
+        name: "Test Visitor",
+        phone: "555-0100",
+        zipCode: "FLORIDA",
+        email: "test@example.com",
+        serviceNeeded: "Cooling",
+        description: "Cooling system is not starting.",
       }),
     ).rejects.toMatchObject({ code: "BAD_REQUEST" });
 

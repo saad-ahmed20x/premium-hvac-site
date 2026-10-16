@@ -8,6 +8,7 @@ import { createServiceRequest, listServiceRequests } from "./db";
 const serviceRequestInput = z.object({
   name: z.string().trim().min(2).max(160),
   phone: z.string().trim().min(7).max(40),
+  zipCode: z.string().trim().regex(/^\d{5}(?:-\d{4})?$/, "Enter a valid ZIP code"),
   email: z.string().trim().email().max(320),
   serviceNeeded: z.string().trim().min(1).max(120),
   preferredDateTime: z.string().trim().max(160).optional(),
