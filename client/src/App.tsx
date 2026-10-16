@@ -11,6 +11,7 @@ import ServiceDetail from "@/pages/ServiceDetail";
 import Services from "@/pages/Services";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { ScrollRestoration } from "./components/ScrollRestoration";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 function Router() {
@@ -30,7 +31,7 @@ function Router() {
 }
 
 function App() {
-  return <ErrorBoundary><ThemeProvider defaultTheme="light"><TooltipProvider><Toaster /><Router /></TooltipProvider></ThemeProvider></ErrorBoundary>;
+  return <ErrorBoundary><ThemeProvider defaultTheme="light"><TooltipProvider><Toaster /><ScrollRestoration /><Router /></TooltipProvider></ThemeProvider></ErrorBoundary>;
 }
 
 export default App;
