@@ -1,10 +1,10 @@
 import { Mail, MapPin, Phone } from "lucide-react";
-import { COMPANY } from "@/siteData";
+import { ASSETS, COMPANY } from "@/siteData";
 import { SectionLabel, SiteChrome } from "@/components/SiteChrome";
 import { ServiceRequestForm } from "@/components/ServiceRequestForm";
 
 export default function Contact() {
-  return <SiteChrome><main className="page-main"><section className="page-hero page-hero--dark"><div className="container page-hero__inner"><SectionLabel number="01" light>Next step</SectionLabel><h1>Let’s get your<br /><em>comfort back.</em></h1><p>Tell us what is happening and we will help make the next step clear. For urgent issues, call to confirm current availability.</p></div></section>
+  return <SiteChrome><main className="page-main"><section className="page-hero page-hero--image"><div className="page-hero__backdrop" style={{ backgroundImage: `url(${ASSETS.emergency})` }} /><div className="page-hero__overlay" /><div className="container page-hero__inner"><SectionLabel number="01" light>Next step</SectionLabel><h1>Let’s get your<br /><em>comfort back.</em></h1><p>Tell us what is happening and we will help make the next step clear. For urgent issues, call to confirm current availability.</p></div></section>
     <section className="contact-page"><div className="container contact-page__grid"><div className="contact-page__lead"><SectionLabel number="02">Start with a short note</SectionLabel><h2>Good service<br /><em>starts here.</em></h2><p>The form saves your request securely so the team can review it and follow up using the contact details you provide.</p><div className="contact-direct"><a href={COMPANY.phoneHref}><Phone size={17} /> <span><small>Call</small>{COMPANY.phone}</span></a><a href={`mailto:${COMPANY.email}`}><Mail size={17} /> <span><small>Email</small>{COMPANY.email}</span></a><span><MapPin size={17} /> <span><small>Service area</small>{COMPANY.area}</span></span></div><span className="placeholder-caption">[PLACEHOLDER — VERIFY HOURS, ADDRESS, RESPONSE EXPECTATIONS, AND EMERGENCY AVAILABILITY BEFORE LAUNCH]</span></div><div className="contact-form"><ServiceRequestForm /></div></div></section>
     <section className="contact-note"><div className="container contact-note__inner"><SectionLabel number="03" light>Before you send</SectionLabel><p>Not sure which service to choose? Select the closest match and describe what changed. The first call is a conversation, not a commitment.</p></div></section></main></SiteChrome>;
 }

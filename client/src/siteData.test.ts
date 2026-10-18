@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { serviceMenuItems } from "./components/SiteChrome";
 import { faqs, services, serviceAreas } from "./siteData";
 
 describe("HVAC site content", () => {
@@ -20,5 +21,11 @@ describe("HVAC site content", () => {
   it("keeps the placeholder-safe information architecture populated", () => {
     expect(faqs.length).toBeGreaterThanOrEqual(5);
     expect(serviceAreas.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("keeps every service reachable from the Services menu", () => {
+    expect(serviceMenuItems.map((item) => item.href)).toEqual(
+      services.map((service) => `/services/${service.slug}`),
+    );
   });
 });
