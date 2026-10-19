@@ -22,6 +22,7 @@ export const serviceRequests = mysqlTable("serviceRequests", {
   phone: varchar("phone", { length: 40 }).notNull(),
   zipCode: varchar("zipCode", { length: 10 }),
   email: varchar("email", { length: 320 }).notNull(),
+  consentAt: timestamp("consentAt"),
   serviceNeeded: varchar("serviceNeeded", { length: 120 }).notNull(),
   preferredDateTime: varchar("preferredDateTime", { length: 160 }),
   description: text("description").notNull(),

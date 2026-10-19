@@ -2,8 +2,9 @@ import { describe, expect, it, vi } from "vitest";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 
-const { createServiceRequest } = vi.hoisted(() => ({
+const { createServiceRequest, notifyOwner } = vi.hoisted(() => ({
   createServiceRequest: vi.fn().mockResolvedValue(42),
+  notifyOwner: vi.fn().mockResolvedValue(true),
 }));
 
 vi.mock("./db", () => ({
@@ -14,6 +15,8 @@ vi.mock("./db", () => ({
   getUserByOpenId: vi.fn(),
 }));
 
+vi.mock("./_core/notification", () => ({ notifyOwner }));
+
 function createContext(): TrpcContext {
   return {
     user: null,
@@ -22,47 +25,52 @@ function createContext(): TrpcContext {
   };
 }
 
+const validRequest = {
+  name: "Test Visitor",
+  phone: "555-0100",
+  zipCode: "32801",
+  email: "test@example.com",
+  consent: true as const,
+  serviceNeeded: "Cooling",
+  preferredDateTime: "Next available",
+  description: "Cooling system is not starting.",
+};
+
 describe("serviceRequests.create", () => {
-  it("persists a valid public service request and returns its id", async () => {
+  it("persists a valid public service request and notifies the owner", async () => {
     createServiceRequest.mockClear();
+    notifyOwner.mockClear();
     const caller = appRouter.createCaller(createContext());
 
-    const result = await caller.serviceRequests.create({
-      name: "Test Visitor",
-      phone: "555-0100",
-      zipCode: "32801",
-      email: "test@example.com",
-      serviceNeeded: "Cooling",
-      preferredDateTime: "Next available",
-      description: "Cooling system is not starting.",
-    });
+    const result = await caller.serviceRequests.create(validRequest);
 
     expect(result).toEqual({ success: true, id: 42 });
-    expect(createServiceRequest).toHaveBeenCalledWith({
+    expect(createServiceRequest).toHaveBeenCalledWith(expect.objectContaining({
       name: "Test Visitor",
       phone: "555-0100",
       zipCode: "32801",
       email: "test@example.com",
+      consentAt: expect.any(Date),
       serviceNeeded: "Cooling",
       preferredDateTime: "Next available",
       description: "Cooling system is not starting.",
-    });
+    }));
+    expect(notifyOwner).toHaveBeenCalledWith(expect.objectContaining({
+      title: "New HVAC service request",
+      content: expect.stringContaining("Lead #42"),
+    }));
   });
 
   it("rejects invalid contact information before touching the database", async () => {
     createServiceRequest.mockClear();
     const caller = appRouter.createCaller(createContext());
 
-    await expect(
-      caller.serviceRequests.create({
-        name: "A",
-        phone: "555-0100",
-        zipCode: "bad-zip",
-        email: "not-an-email",
-        serviceNeeded: "Cooling",
-        description: "Not enough valid input.",
-      }),
-    ).rejects.toMatchObject({ code: "BAD_REQUEST" });
+    await expect(caller.serviceRequests.create({
+      ...validRequest,
+      name: "A",
+      zipCode: "bad-zip",
+      email: "not-an-email",
+    })).rejects.toMatchObject({ code: "BAD_REQUEST" });
 
     expect(createServiceRequest).not.toHaveBeenCalled();
   });
@@ -71,17 +79,7 @@ describe("serviceRequests.create", () => {
     createServiceRequest.mockClear();
     const caller = appRouter.createCaller(createContext());
 
-    await expect(
-      caller.serviceRequests.create({
-        name: "Test Visitor",
-        phone: "555-0100",
-        zipCode: "FLORIDA",
-        email: "test@example.com",
-        serviceNeeded: "Cooling",
-        description: "Cooling system is not starting.",
-      }),
-    ).rejects.toMatchObject({ code: "BAD_REQUEST" });
-
+    await expect(caller.serviceRequests.create({ ...validRequest, zipCode: "FLORIDA" })).rejects.toMatchObject({ code: "BAD_REQUEST" });
     expect(createServiceRequest).not.toHaveBeenCalled();
   });
 
@@ -89,17 +87,24 @@ describe("serviceRequests.create", () => {
     createServiceRequest.mockClear();
     const caller = appRouter.createCaller(createContext());
 
-    await expect(
-      caller.serviceRequests.create({
-        name: "Test Visitor",
-        phone: "call me maybe",
-        zipCode: "32801",
-        email: "test@example.com",
-        serviceNeeded: "Cooling",
-        description: "Cooling system is not starting.",
-      }),
-    ).rejects.toMatchObject({ code: "BAD_REQUEST" });
-
+    await expect(caller.serviceRequests.create({ ...validRequest, phone: "call me maybe" })).rejects.toMatchObject({ code: "BAD_REQUEST" });
     expect(createServiceRequest).not.toHaveBeenCalled();
+  });
+
+  it("rejects a request without privacy consent before touching the database", async () => {
+    createServiceRequest.mockClear();
+    const caller = appRouter.createCaller(createContext());
+
+    await expect(caller.serviceRequests.create({ ...validRequest, consent: false as never })).rejects.toMatchObject({ code: "BAD_REQUEST" });
+    expect(createServiceRequest).not.toHaveBeenCalled();
+  });
+
+  it("keeps a saved lead successful when the owner notification service is unavailable", async () => {
+    createServiceRequest.mockClear();
+    notifyOwner.mockRejectedValueOnce(new Error("notification unavailable"));
+    const caller = appRouter.createCaller(createContext());
+
+    await expect(caller.serviceRequests.create(validRequest)).resolves.toEqual({ success: true, id: 42 });
+    expect(createServiceRequest).toHaveBeenCalled();
   });
 });

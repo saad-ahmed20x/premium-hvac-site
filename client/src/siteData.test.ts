@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { serviceMenuItems } from "./components/SiteChrome";
-import { faqs, services, serviceAreas } from "./siteData";
+import { faqs, services, serviceAreas, verifiedReviews } from "./siteData";
 
 describe("HVAC site content", () => {
   it("keeps service slugs unique and route-safe", () => {
@@ -27,5 +27,14 @@ describe("HVAC site content", () => {
     expect(serviceMenuItems.map((item) => item.href)).toEqual(
       services.map((service) => `/services/${service.slug}`),
     );
+  });
+
+  it("requires source-linked fields for every published verified review", () => {
+    for (const review of verifiedReviews) {
+      expect(review.quote.length).toBeGreaterThan(20);
+      expect(review.customerName.length).toBeGreaterThan(1);
+      expect(review.sourceLabel.length).toBeGreaterThan(1);
+      expect(review.sourceUrl).toMatch(/^https?:\/\//);
+    }
   });
 });

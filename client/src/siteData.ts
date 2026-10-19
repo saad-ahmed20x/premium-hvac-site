@@ -164,3 +164,14 @@ export const faqs = [
 ];
 
 export const serviceAreas = ["Florida service area", "Approved city list pending", "County coverage pending"];
+
+export type VerifiedReview = {
+  quote: string;
+  customerName: string;
+  location?: string;
+  sourceLabel: string;
+  sourceUrl: string;
+};
+
+// Keep this empty until the business supplies approved customer feedback and a legitimate source URL.
+export const verifiedReviews: VerifiedReview[] = [];

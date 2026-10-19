@@ -1,0 +1,1 @@
+ALTER TABLE `serviceRequests` ADD `consentAt` timestamp;

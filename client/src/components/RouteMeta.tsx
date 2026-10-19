@@ -55,9 +55,14 @@ export function RouteMeta() {
                 ? `HVAC FAQs | ${COMPANY.name}`
                 : normalized === "/contact"
                   ? `Request HVAC Service | ${COMPANY.name}`
-                  : `${COMPANY.name} | Florida HVAC Service`;
+                  : normalized === "/privacy"
+                    ? `Privacy Policy | ${COMPANY.name}`
+                    : normalized === "/terms"
+                      ? `Terms & Conditions | ${COMPANY.name}`
+                      : `${COMPANY.name} | Florida HVAC Service`;
     const description = service ? `${service.short} Clear diagnosis and a documented next step.` : baseDescription;
-    const canonical = `${COMPANY.siteUrl}${normalized === "/" ? "/" : normalized}`;
+    const canonicalPath = normalized === "/service-areas" ? "/service-area" : normalized;
+    const canonical = `${COMPANY.siteUrl}${canonicalPath === "/" ? "/" : canonicalPath}`;
     const robots = COMPANY.verified ? "index, follow, max-image-preview:large" : "noindex, nofollow, noarchive";
 
     document.title = title;

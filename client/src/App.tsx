@@ -9,6 +9,7 @@ import Reviews from "@/pages/Reviews";
 import ServiceArea from "@/pages/ServiceArea";
 import ServiceDetail from "@/pages/ServiceDetail";
 import Services from "@/pages/Services";
+import Legal from "@/pages/Legal";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ScrollRestoration } from "./components/ScrollRestoration";
@@ -25,6 +26,8 @@ function Router() {
     <Route path="/service-areas" component={ServiceArea} />
     <Route path="/faq" component={FAQ} />
     <Route path="/contact" component={Contact} />
+    <Route path="/privacy" component={Legal} />
+    <Route path="/terms" component={Legal} />
     <Route path="/404" component={NotFound} />
     <Route component={NotFound} />
   </Switch>;

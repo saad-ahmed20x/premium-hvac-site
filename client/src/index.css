@@ -552,3 +552,42 @@ html { scroll-padding-top: 110px; }
   .detail-hero__image, .detail-hero__image img { min-height: 305px; }
   .request-form-wrap, .detail-request__form, .contact-form { box-shadow: 0 14px 34px rgba(38,37,34,.06); }
 }
+
+/* Consent, legal pages, and verified review presentation */
+.consent-field { display: flex; align-items: flex-start; gap: 10px; color: var(--muted-foreground); font-size: 11px; line-height: 1.5; }
+.consent-field input { flex: 0 0 auto; width: 15px; height: 15px; margin-top: 1px; accent-color: var(--copper-deep); }
+.consent-field a { color: var(--ink-soft); text-decoration: underline; text-decoration-color: rgba(185,112,75,.55); text-underline-offset: 3px; }
+.consent-field a:hover { color: var(--copper-deep); }
+.legal-hero { min-height: 420px; }
+.legal-hero .page-hero__inner { padding-bottom: 76px; }
+.legal-hero .page-hero__inner h1 { max-width: 760px; }
+.legal-hero .page-hero__inner p { max-width: 560px; color: var(--muted-foreground); }
+.legal-page { padding: clamp(90px, 12vw, 155px) 0; }
+.legal-page__grid { display: grid; grid-template-columns: .55fr 1.45fr; gap: 11vw; align-items: start; }
+.legal-page__aside { position: sticky; top: 140px; display: flex; flex-direction: column; align-items: flex-start; gap: 15px; color: var(--muted-foreground); font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.legal-page__aside-icon { display: grid; place-items: center; width: 38px; height: 38px; margin-bottom: 5px; color: var(--copper-deep); border: 1px solid var(--line); }
+.legal-page__aside a { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; color: var(--ink-soft); font-family: "DM Sans", sans-serif; font-size: 13px; letter-spacing: 0; text-transform: none; }
+.legal-page__aside a:hover { color: var(--copper-deep); }
+.legal-page__content { max-width: 720px; }
+.legal-page__content h2 { margin: 0; font-size: clamp(42px, 5vw, 68px); letter-spacing: -.065em; line-height: .95; }
+.legal-page__content h3 { margin: 48px 0 0; color: var(--ink-soft); font-size: 20px; font-weight: 600; letter-spacing: -.035em; }
+.legal-page__content p { margin: 16px 0 0; color: var(--muted-foreground); font-size: 15px; line-height: 1.75; }
+.legal-page__content a { color: var(--copper-deep); text-decoration: underline; text-decoration-color: rgba(185,112,75,.45); text-underline-offset: 3px; }
+.verified-review-list { display: flex; flex-direction: column; gap: 22px; }
+.verified-review-card { padding: 38px 42px 32px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.16); }
+.verified-review-card > svg { color: var(--copper); }
+.verified-review-card p { margin: 20px 0 26px; color: var(--ink-soft); font-size: clamp(21px, 2.4vw, 31px); font-weight: 500; letter-spacing: -.035em; line-height: 1.22; }
+.verified-review-card__meta { display: flex; align-items: center; justify-content: space-between; gap: 18px; color: var(--muted-foreground); font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.verified-review-card__meta a { display: inline-flex; align-items: center; gap: 5px; color: var(--copper-deep); }
+.verified-review-card__meta a:hover { color: var(--ink); }
+@media (max-width: 760px) {
+  .legal-hero { min-height: 430px; }
+  .legal-page { padding-block: 84px; }
+  .legal-page__grid { display: flex; flex-direction: column; gap: 46px; }
+  .legal-page__aside { position: static; }
+  .legal-page__content h3 { margin-top: 38px; }
+  .legal-page__content p { font-size: 14px; }
+  .verified-review-card { padding: 29px 0 26px 34px; }
+  .verified-review-card p { font-size: 23px; }
+  .verified-review-card__meta { align-items: flex-start; flex-direction: column; gap: 10px; }
+}
