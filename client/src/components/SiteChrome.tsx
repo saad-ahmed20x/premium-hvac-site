@@ -4,11 +4,12 @@ import { Link, useLocation } from "wouter";
 import { ASSETS, COMPANY, hasVerifiedContact, services, serviceAreas } from "@/siteData";
 import { RouteMeta } from "@/components/RouteMeta";
 
-const navItems = [
+export const navItems = [
   ["Services", "/services"],
   ["About", "/about"],
   ["Reviews", "/reviews"],
   ["Service areas", "/service-area"],
+  ["FAQ", "/faq"],
   ["Contact", "/contact"],
 ] as const;
 

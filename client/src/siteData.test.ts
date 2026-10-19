@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { serviceMenuItems } from "./components/SiteChrome";
+import { navItems, serviceMenuItems } from "./components/SiteChrome";
 import { faqs, services, serviceAreas, verifiedReviews } from "./siteData";
 
 describe("HVAC site content", () => {
@@ -27,6 +27,10 @@ describe("HVAC site content", () => {
     expect(serviceMenuItems.map((item) => item.href)).toEqual(
       services.map((service) => `/services/${service.slug}`),
     );
+  });
+
+  it("keeps the FAQ page reachable from primary navigation", () => {
+    expect(navItems).toContainEqual(["FAQ", "/faq"]);
   });
 
   it("requires source-linked fields for every published verified review", () => {
