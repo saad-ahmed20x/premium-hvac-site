@@ -29,7 +29,7 @@ export function ServiceRequestForm({ compact = false, defaultService }: { compac
     }
   };
 
-  if (submitted) return <div className="form-success"><div className="form-success__mark"><Check size={22} /></div><span className="form-success__eyebrow">Request received</span><h3>We have your note.</h3><p>Your request has been saved securely. The team can now review it and follow up using the contact details you provided.</p><button className="text-link text-link--light" onClick={() => setSubmitted(false)} type="button">Send another request <ArrowUpRight size={17} /></button></div>;
+  if (submitted) return <div className="form-success"><div className="form-success__mark"><Check size={22} /></div><span className="form-success__eyebrow">Request received</span><h3>We have your note.</h3><p>Your request was saved successfully. The team can now review it and follow up using the contact details you provided.</p><button className="text-link" onClick={() => setSubmitted(false)} type="button">Send another request <ArrowUpRight size={17} /></button></div>;
 
   return <form className={`request-form ${compact ? "request-form--compact" : ""}`} onSubmit={handleSubmit}>
     <div className="request-form__top"><span>Request service</span><span>Approx. 2 minutes</span></div>
@@ -38,7 +38,7 @@ export function ServiceRequestForm({ compact = false, defaultService }: { compac
     <label>Email<input name="email" type="email" required placeholder="you@example.com" autoComplete="email" /></label>
     <label>What is happening?<textarea name="description" required placeholder="A short description of the issue" rows={compact ? 4 : 3} /></label>
     {submitError && <p className="form-error" role="alert">{submitError}</p>}
-    <button className="button button--copper" disabled={createRequest.isPending} type="submit">{createRequest.isPending ? "Saving request…" : "Send service request"} <ArrowUpRight size={16} /></button>
-    <span className="form-disclaimer">[PLACEHOLDER — ADD PRIVACY / RESPONSE EXPECTATIONS BEFORE LAUNCH]</span>
+    <button className="button button--copper" disabled={createRequest.isPending} type="submit" aria-busy={createRequest.isPending}>{createRequest.isPending ? "Sending request…" : "Send service request"} <ArrowUpRight size={16} /></button>
+    <span className="form-disclaimer">Your request is saved only after a successful submission. Add the business privacy notice and response expectations before launch.</span>
   </form>;
 }

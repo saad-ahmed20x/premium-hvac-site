@@ -9,7 +9,7 @@ export const ASSETS = {
 export const COMPANY = {
   name: "[COMPANY NAME]",
   phone: "[PHONE NUMBER]",
-  phoneHref: "tel:+10000000000",
+  phoneHref: "",
   email: "[EMAIL]",
   area: "[PRIMARY SERVICE AREA + SURROUNDING CITIES]",
   city: "[CITY]",
@@ -17,6 +17,8 @@ export const COMPANY = {
   siteUrl: "https://premiumhvac-fgm6mlf8.manus.space",
   verified: false,
 };
+
+export const hasVerifiedContact = COMPANY.verified && !COMPANY.phone.includes("[") && !COMPANY.email.includes("[") && COMPANY.phoneHref.startsWith("tel:+");
 
 export type Service = {
   slug: string;
@@ -153,12 +155,12 @@ export const services: Service[] = [
 ];
 
 export const faqs = [
-  { question: "How quickly can you come out?", answer: "[PLACEHOLDER — Add the company's verified scheduling window here. Avoid promising a response time until it is confirmed.]" },
-  { question: "Do you offer emergency HVAC service?", answer: "[PLACEHOLDER — Confirm emergency availability, hours, and the correct phone number before publishing.]" },
-  { question: "How do I know whether my AC should be repaired or replaced?", answer: "A technician should diagnose the actual condition first, then explain the repair path, expected service life, and replacement considerations in plain language. [PLACEHOLDER — Add company-specific guidance.]" },
-  { question: "How often should my HVAC system be maintained?", answer: "[PLACEHOLDER — Add the company's verified maintenance recommendation and whether it varies by heating and cooling system.]" },
-  { question: "How long does an HVAC installation take?", answer: "[PLACEHOLDER — Add a verified range that accounts for equipment, access, permitting, and site conditions.]" },
-  { question: "Do you service my area?", answer: `The current service area is ${COMPANY.area}, in ${COMPANY.state}. [PLACEHOLDER — Add the complete approved list of cities and counties.]` },
+  { question: "How quickly can you come out?", answer: "Availability depends on the current schedule, the type of issue, and your location. Use the request form with your ZIP code and the team can confirm the next available step." },
+  { question: "Do you offer emergency HVAC service?", answer: "Emergency availability is location- and schedule-dependent. For an urgent no-cool, no-heat, leak, or electrical concern, call once the verified business number is published or send a request with the word urgent." },
+  { question: "How do I know whether my AC should be repaired or replaced?", answer: "Start with a diagnosis. The right recommendation depends on the system's condition, age, repair scope, operating cost, and how well it serves the space." },
+  { question: "How often should my HVAC system be maintained?", answer: "Many systems benefit from a professional check at least once a year, with timing adjusted for equipment type, usage, filters, and manufacturer guidance." },
+  { question: "How long does an HVAC installation take?", answer: "Installation time varies with equipment, access, ductwork, electrical work, permits, and inspection requirements. A confirmed scope is the best way to set an honest schedule." },
+  { question: "Do you service my area?", answer: `The site is being prepared for an approved Florida service area. City and county coverage will be published after the business details are verified.` },
 ];
 
-export const serviceAreas = ["[PRIMARY CITY]", "[SURROUNDING CITY]", "[COUNTY / SERVICE AREA]", "[CITY, FLORIDA]"];
+export const serviceAreas = ["Florida service area", "Approved city list pending", "County coverage pending"];

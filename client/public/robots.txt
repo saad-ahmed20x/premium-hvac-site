@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-Disallow: /api/
-Sitemap: https://premiumhvac-fgm6mlf8.manus.space/sitemap.xml
+Disallow: /

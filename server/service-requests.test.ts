@@ -84,4 +84,22 @@ describe("serviceRequests.create", () => {
 
     expect(createServiceRequest).not.toHaveBeenCalled();
   });
+
+  it("rejects a malformed phone number before touching the database", async () => {
+    createServiceRequest.mockClear();
+    const caller = appRouter.createCaller(createContext());
+
+    await expect(
+      caller.serviceRequests.create({
+        name: "Test Visitor",
+        phone: "call me maybe",
+        zipCode: "32801",
+        email: "test@example.com",
+        serviceNeeded: "Cooling",
+        description: "Cooling system is not starting.",
+      }),
+    ).rejects.toMatchObject({ code: "BAD_REQUEST" });
+
+    expect(createServiceRequest).not.toHaveBeenCalled();
+  });
 });

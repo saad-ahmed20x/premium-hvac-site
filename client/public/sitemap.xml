@@ -1,14 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/services</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/services/ac-repair</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/services/ac-installation</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/services/maintenance</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/services/heat-pumps</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/about</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/reviews</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/service-area</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/faq</loc></url>
-  <url><loc>https://premiumhvac-fgm6mlf8.manus.space/contact</loc></url>
-</urlset>
+<!-- Demo site: publish a complete sitemap only after COMPANY.verified is true and business details are approved. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>

@@ -515,3 +515,40 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .mobile-nav__submenu a { min-height: 40px; padding-left: 14px; color: var(--ink-soft); font-size: 12px; font-weight: 500; }
   .mobile-nav__submenu a span { color: var(--ink-soft); }
 }
+
+/* Quality pass: hierarchy, trust states, image crops, and responsive polish */
+html { scroll-padding-top: 110px; }
+.phone-link--pending { cursor: not-allowed; opacity: .72; }
+.contact-pending { opacity: .8; }
+.system-bar__inner > span { white-space: nowrap; }
+.page-hero { min-height: 485px; }
+.page-hero__backdrop { transform: scale(1.025); transition: transform 1.2s var(--ease-out); }
+.page-hero:hover .page-hero__backdrop { transform: scale(1.04); }
+.page-hero__overlay { background: linear-gradient(90deg, rgba(21,21,19,.92) 0%, rgba(21,21,19,.62) 44%, rgba(21,21,19,.2) 100%); }
+.page-hero__inner { padding: 72px 0 74px; }
+.page-hero__inner p { max-width: 540px; }
+.service-card__image img, .detail-hero__image img, .about-intro__image img { image-rendering: auto; }
+.service-card__image { height: 300px; }
+.detail-hero__image { min-height: 465px; }
+.detail-hero__image img { min-height: 465px; }
+.request-form input:invalid:not(:placeholder-shown), .request-form textarea:invalid:not(:placeholder-shown), .request-form select:invalid { border-color: rgba(155,61,46,.7); }
+.form-success .text-link { color: var(--ink); }
+.form-success .text-link:hover { color: var(--copper-deep); }
+.directory-section, .about-intro, .area-detail, .faq-page, .contact-page, .service-promise, .area-contact, .problem-section, .secondary-services, .detail-problems, .detail-benefits, .reviews-page, .reviews-cta { padding-block: clamp(88px, 10.5vw, 145px); }
+@media (max-width: 1080px) {
+  .system-bar__inner > span:nth-child(3) { display: none; }
+  .site-header__inner { gap: 16px; }
+  .desktop-nav { gap: 15px; }
+}
+@media (max-width: 760px) {
+  html { scroll-padding-top: 78px; }
+  .system-bar__inner > span:nth-child(2) { display: inline; max-width: 48vw; overflow: hidden; text-overflow: ellipsis; }
+  .page-hero { min-height: 452px; }
+  .page-hero__backdrop { transform: scale(1.01); }
+  .page-hero:hover .page-hero__backdrop { transform: scale(1.01); }
+  .page-hero__overlay { background: linear-gradient(90deg, rgba(21,21,19,.9), rgba(21,21,19,.54)); }
+  .page-hero__inner, .page-hero--paper .page-hero__inner { padding: 58px 0 61px; }
+  .service-card__image { height: 260px; }
+  .detail-hero__image, .detail-hero__image img { min-height: 305px; }
+  .request-form-wrap, .detail-request__form, .contact-form { box-shadow: 0 14px 34px rgba(38,37,34,.06); }
+}
